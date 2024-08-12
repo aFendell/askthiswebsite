@@ -16,7 +16,15 @@ https://askthiswebsite.com/https://exampleUrl.com
 
 ## Getting Started
 
-First, run the development server:
+First, install packages:
+
+```bash
+npm install
+```
+
+Create a .env file with the variables you see in the sample file.
+
+run the development server:
 
 ```bash
 npm run dev
@@ -27,3 +35,5 @@ pnpm dev
 # or
 bun dev
 ```
+
+Go!
