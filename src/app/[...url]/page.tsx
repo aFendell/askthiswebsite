@@ -8,7 +8,7 @@ type Props = {
   };
 };
 
-const constructUrl = (url: string[]) => {
+const constructUrl = ({ url }: { url: string[] }) => {
   const decodedComponents = url.map((component) =>
     decodeURIComponent(component)
   );
@@ -17,25 +17,29 @@ const constructUrl = (url: string[]) => {
 };
 
 const Page = async ({ params }: Props) => {
-  const reconstructedUrl = constructUrl(params.url as string[]);
+  const reconstructedUrl = constructUrl({ url: params.url as string[] });
 
+  const indexedSetKey = 'indexed-urls';
   const isAlreadyIndexed = await redis.sismember(
-    'indexed-urls',
+    indexedSetKey,
     reconstructedUrl
   );
 
   const sessionId = 'mock-session-id';
 
-  console.log(isAlreadyIndexed);
-
   if (!isAlreadyIndexed) {
-    await ragChat.context.add({
+    const result = await ragChat.context.add({
       type: 'html',
       source: reconstructedUrl,
       config: { chunkOverlap: 50, chunkSize: 200 },
     });
 
-    await redis.sadd('indexed-urls', reconstructedUrl);
+    if (!result.success) {
+      console.error(`Failed to add context: ${result.error}`);
+      return <div>Failed to load source website</div>;
+    }
+
+    await redis.sadd(indexedSetKey, reconstructedUrl);
   }
 
   return <ChatWrapper sessionId={sessionId} />;
