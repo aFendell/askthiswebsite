@@ -1,7 +1,8 @@
 # AskThisWebsite
 
-A fullstack chatbot you can run on any website.
-Simply prefix any site you would like to run the chat on, with the base url you are running the bot on (localhost:3000 on dev or the url where the bot is hosted).
+A fullstack AI chatbot you can run on any website.
+Simply prefix any site you would like to run the chat on, with the base url you are running the bot on (localhost:3000 on dev or the url where the bot is hosted) -
+https://askthiswebsite.com/https://exampleUrl.com
 
 ## Stack
 
