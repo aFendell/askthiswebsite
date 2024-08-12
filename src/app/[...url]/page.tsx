@@ -24,6 +24,11 @@ const Page = async ({ params }: Props) => {
 
   const sessionId = (reconstructedUrl + '--' + sessionCookie).replace('/', '');
 
+  const initialMessages = await ragChat.history.getMessages({
+    amount: 10,
+    sessionId,
+  });
+
   const isAlreadyIndexed = await redis.sismember(
     indexedSetKey,
     reconstructedUrl
@@ -44,7 +49,9 @@ const Page = async ({ params }: Props) => {
     await redis.sadd(indexedSetKey, reconstructedUrl);
   }
 
-  return <ChatWrapper sessionId={sessionId} />;
+  return (
+    <ChatWrapper sessionId={sessionId} initialMessages={initialMessages} />
+  );
 };
 
 export default Page;
