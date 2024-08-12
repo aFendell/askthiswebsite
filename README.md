@@ -8,6 +8,8 @@ Simply prefix any site you would like to run the chat on, with the base url you 
 - Next
 - React
 - TypeScript
+- Tailwind
+- Shadcn-ui
 - Upstash
 - Redis
 
